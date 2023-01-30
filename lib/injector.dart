@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:spotify_lite/providers/spotify_provider.dart';
+import 'package:spotify_lite/services/spotify_service.dart';
 
 class Injector extends InheritedWidget {
   final navigatorKey = GlobalKey<NavigatorState>();
-  final SpotifyProvider spotifyProvider = SpotifyProvider();
+  final SpotifyService spotifyService = SpotifyService();
 
   Injector({
     Key? key,

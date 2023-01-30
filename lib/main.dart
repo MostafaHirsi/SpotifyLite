@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'injector.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(
@@ -41,9 +42,13 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: ElevatedButton(
-        child: const Text("Click Me!"),
-        onPressed: () {},
+      body: Container(
+        child: Center(
+          child: ElevatedButton(
+            child: Text("Click Me"),
+            onPressed: () {},
+          ),
+        ),
       ),
     );
   }
