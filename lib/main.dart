@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotify_lite/blocs/authentication/authentication_bloc.dart';
+import 'package:spotify_lite/screens/introduction/introduction_screen.dart';
 import 'package:spotify_lite/services/spotify_service.dart';
 import 'package:injector/injector.dart';
 
@@ -25,7 +26,41 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        colorScheme: const ColorScheme(
+          brightness: Brightness.dark,
+          primary: Color(0xFF1DB954),
+          onPrimary: Color(0xFF1DB954),
+          secondary: Color(0xFF191414),
+          onSecondary: Color(0xFF191414),
+          error: Colors.white,
+          onError: Colors.white,
+          background: Color(0xFF191414),
+          onBackground: Color(0xFF191414),
+          surface: Color(0xFF535353),
+          onSurface: Color(0xFF535353),
+          secondaryContainer: Colors.white,
+          onSecondaryContainer: Colors.white,
+        ),
+        scaffoldBackgroundColor: const Color(0xFF121212),
+        appBarTheme: const AppBarTheme(
+          elevation: 0,
+          color: Color(0xFF121212),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: ButtonStyle(
+            padding: const MaterialStatePropertyAll(
+              EdgeInsets.symmetric(vertical: 16, horizontal: 14),
+            ),
+            backgroundColor: const MaterialStatePropertyAll(
+              Color(0xFF1DB954),
+            ),
+            shape: MaterialStatePropertyAll(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(36.0),
+              ),
+            ),
+          ),
+        ),
       ),
       home: MultiBlocProvider(
         providers: [
@@ -35,38 +70,7 @@ class MyApp extends StatelessWidget {
             },
           ),
         ],
-        child: MyHomePage(title: 'Flutter Demo Home Page'),
-      ),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Container(
-        child: Center(
-          child: ElevatedButton(
-            child: Text("Click Me"),
-            onPressed: () {
-              AuthenticationBloc authenticationBloc =
-                  BlocProvider.of<AuthenticationBloc>(context);
-              print(authenticationBloc.state.toString());
-            },
-          ),
-        ),
+        child: const IntroductionScreen(),
       ),
     );
   }

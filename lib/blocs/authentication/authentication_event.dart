@@ -9,6 +9,5 @@ class RetrieveAccessTokenEvent extends AuthenticationEvent {
   RetrieveAccessTokenEvent(this.redirectUrl);
 
   @override
-  // TODO: implement props
   List<Object?> get props => [redirectUrl];
 }
