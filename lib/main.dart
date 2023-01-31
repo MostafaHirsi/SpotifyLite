@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'injector.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spotify_lite/blocs/authentication/authentication_bloc.dart';
+import 'package:spotify_lite/services/spotify_service.dart';
+import 'package:injector/injector.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  Injector.appInstance
+      .registerDependency<SpotifyService>(() => SpotifyService());
   runApp(
-    Injector(
-      child: const MyApp(),
-    ),
+    const MyApp(),
   );
 }
 
@@ -18,11 +21,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SpotifyService spotifyService = Injector.appInstance.get<SpotifyService>();
+
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider<AuthenticationBloc>(
+            create: (context) {
+              return AuthenticationBloc(spotifyService);
+            },
+          ),
+        ],
+        child: MyHomePage(title: 'Flutter Demo Home Page'),
+      ),
     );
   }
 }
@@ -46,7 +60,11 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Center(
           child: ElevatedButton(
             child: Text("Click Me"),
-            onPressed: () {},
+            onPressed: () {
+              AuthenticationBloc authenticationBloc =
+                  BlocProvider.of<AuthenticationBloc>(context);
+              print(authenticationBloc.state.toString());
+            },
           ),
         ),
       ),

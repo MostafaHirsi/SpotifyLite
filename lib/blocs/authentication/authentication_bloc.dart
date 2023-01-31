@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:spotify/spotify.dart';
+import 'package:spotify_lite/models/authentication.dart';
 import 'package:spotify_lite/services/spotify_service.dart';
 
 part 'authentication_event.dart';
@@ -11,12 +12,16 @@ class AuthenticationBloc
   final SpotifyService spotifyService;
   AuthenticationBloc(this.spotifyService) : super(AuthenticationInitial()) {
     on<AuthenticationEvent>((event, emit) async {
-      if (event is RetrieveAccessTokenEvent) {
-        SpotifyApi? spotifyApi = await spotifyService
-            .getUserAuthenticatedSpotifyApi(event.redirectUrl);
-        if (spotifyApi != null) {
-          emit(RetrieveAccessTokenSuccess(spotifyApi));
+      try {
+        if (event is RetrieveAccessTokenEvent) {
+          AuthenticationModel authenticationModel = await spotifyService
+              .getUserAuthenticatedSpotifyApi(event.redirectUrl);
+          if (authenticationModel != null) {
+            emit(RetrieveAccessTokenSuccess(authenticationModel));
+          }
         }
+      } on Exception catch (e) {
+        emit(AuthenticationError(e.toString()));
       }
     });
   }
