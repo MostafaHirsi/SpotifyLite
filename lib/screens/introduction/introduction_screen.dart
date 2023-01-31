@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:spotify_lite/screens/authentication/authentication_screen.dart';
+import 'package:spotify_lite/blocs/authentication/authentication_bloc.dart';
+import 'package:spotify_lite/screens/introduction/authentication/authentication_modal.dart';
 import 'package:spotify_lite/utils/assets.dart';
 
 import '../../widgets/buttons/primary_button.dart';
@@ -10,6 +12,8 @@ class IntroductionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthenticationBloc authenticationBloc =
+        BlocProvider.of<AuthenticationBloc>(context);
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
@@ -26,7 +30,21 @@ class IntroductionScreen extends StatelessWidget {
             ),
             PrimaryButton(
               label: 'Get started',
-              onPress: showSpotifyAuthenticator(context),
+              onPress: () async {
+                await showModalBottomSheet<void>(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  context: context,
+                  useSafeArea: true,
+                  isScrollControlled: true,
+                  builder: (BuildContext context) {
+                    return AuthenticationModal(
+                      authenticationBloc: authenticationBloc,
+                    );
+                  },
+                );
+              },
             ),
           ],
         ),
@@ -68,20 +86,6 @@ class IntroductionScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  showSpotifyAuthenticator(context) async {
-    await showModalBottomSheet<void>(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      context: context,
-      useSafeArea: true,
-      isScrollControlled: true,
-      builder: (BuildContext context) {
-        return const AuthenticationScreen();
-      },
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotify_lite/blocs/authentication/authentication_bloc.dart';
 import 'package:spotify_lite/screens/introduction/introduction_screen.dart';
+import 'package:spotify_lite/screens/search/search_screen.dart';
 import 'package:spotify_lite/services/spotify_service.dart';
 import 'package:injector/injector.dart';
 
@@ -70,7 +71,19 @@ class MyApp extends StatelessWidget {
             },
           ),
         ],
-        child: const IntroductionScreen(),
+        child: BlocListener<AuthenticationBloc, AuthenticationState>(
+          listener: (context, state) {
+            if (state is RetrieveAccessTokenSuccess) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SearchScreen(),
+                ),
+              );
+            }
+          },
+          child: const IntroductionScreen(),
+        ),
       ),
     );
   }

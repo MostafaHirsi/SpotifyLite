@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:spotify_lite/blocs/authentication/authentication_bloc.dart';
 import 'package:spotify_lite/widgets/buttons/circle_icon_button.dart';
 
-class AuthenticationScreen extends StatelessWidget {
-  const AuthenticationScreen({super.key});
+class AuthenticationModal extends StatelessWidget {
+  final AuthenticationBloc authenticationBloc;
+  const AuthenticationModal({super.key, required this.authenticationBloc});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class AuthenticationScreen extends StatelessWidget {
         onLoadStart: (controller, url) {
           if (url != null &&
               url.toString().contains("http://localhost:8888/?")) {
-            Navigator.pop(context);
+            authenticationBloc.add(RetrieveAccessTokenEvent(url));
           }
         },
         onLoadStop: (controller, url) {},
