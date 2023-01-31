@@ -28,8 +28,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: const ColorScheme(
           brightness: Brightness.dark,
-          primary: Color(0xFF1DB954),
-          onPrimary: Color(0xFF1DB954),
+          primary: Color(0xFF1ed760),
+          onPrimary: Color(0xFF1ed760),
           secondary: Color(0xFF191414),
           onSecondary: Color(0xFF191414),
           error: Colors.white,
@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
               EdgeInsets.symmetric(vertical: 16, horizontal: 14),
             ),
             backgroundColor: const MaterialStatePropertyAll(
-              Color(0xFF1DB954),
+              Color(0xFF1ed760),
             ),
             shape: MaterialStatePropertyAll(
               RoundedRectangleBorder(

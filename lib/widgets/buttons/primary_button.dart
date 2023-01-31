@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class PrimaryButton extends StatelessWidget {
   final bool showAlternativeColor;
   final String label;
+  final void Function()? onPress;
   const PrimaryButton({
     super.key,
     this.showAlternativeColor = false,
     required this.label,
+    this.onPress,
   });
 
   @override
@@ -20,7 +22,7 @@ class PrimaryButton extends StatelessWidget {
               : Theme.of(context).colorScheme.primary,
         ),
       ),
-      onPressed: () => {},
+      onPressed: onPress,
       child: Container(
         child: Baseline(
           baselineType: TextBaseline.alphabetic,

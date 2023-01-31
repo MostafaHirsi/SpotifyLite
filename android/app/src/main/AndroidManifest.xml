@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.spotify_lite">
+    package="com.mostafa.spotify_lite">
    <application
         android:label="spotify_lite"
         android:name="${applicationName}"
