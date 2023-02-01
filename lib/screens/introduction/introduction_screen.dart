@@ -8,6 +8,7 @@ import 'package:spotify_lite/utils/assets.dart';
 import '../../widgets/buttons/primary_button.dart';
 
 class IntroductionScreen extends StatelessWidget {
+  static const String routeName = "IntroductionScreen";
   const IntroductionScreen({super.key});
 
   @override

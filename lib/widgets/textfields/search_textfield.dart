@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spotify_lite/blocs/authentication/authentication_bloc.dart';
+import 'package:spotify_lite/blocs/search/search_bloc.dart';
 
 class SearchTextField extends StatefulWidget {
-  const SearchTextField({super.key});
+  final void Function(String) onSubmit;
+  const SearchTextField({super.key, required this.onSubmit});
 
   @override
   State<SearchTextField> createState() => _SearchTextFieldState();
@@ -42,11 +46,16 @@ class _SearchTextFieldState extends State<SearchTextField> {
         builder: (_, isFocus, child) {
           return TextField(
             focusNode: _focusNode,
+            onSubmitted: widget.onSubmit,
+            style: TextStyle(
+              color: !isFocus ? const Color(0xFF191414) : Colors.white,
+            ),
             decoration: InputDecoration(
               hintText: "What are you looking for?",
               hintStyle: TextStyle(
-                  color: !isFocus ? const Color(0xFF191414) : Colors.white,
-                  fontWeight: FontWeight.w500),
+                color: !isFocus ? const Color(0xFF191414) : Colors.white,
+                fontWeight: FontWeight.w500,
+              ),
               prefixIcon: Icon(
                 Icons.search_rounded,
                 color: !isFocus ? const Color(0xFF191414) : Colors.white,

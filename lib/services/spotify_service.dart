@@ -1,26 +1,52 @@
+import 'dart:convert';
 import 'dart:io';
 
-import 'package:spotify/spotify.dart';
+import 'package:dio/dio.dart';
 import 'package:spotify_lite/models/authentication.dart';
+import 'package:spotify_lite/models/spotify/search_result.dart';
 
 class SpotifyService {
   final String clientId = "7da524d167a54367b2c3affe05efb59a";
   final String clientSecret = "3e337cef22064758b44c3286f9ec33dc";
+  final Dio dio = Dio();
   Future<AuthenticationModel> getUserAuthenticatedSpotifyApi(
-      Uri redirectUrl) async {
-    SpotifyApiCredentials credentials =
-        SpotifyApiCredentials(clientId, clientSecret);
+      String code) async {
+    String basicAuth =
+        'Basic ${base64.encode(utf8.encode('$clientId:$clientSecret'))}';
 
-    var grant = SpotifyApi.authorizationCodeGrant(credentials);
-    var authUri = grant.getAuthorizationUrl(Uri.parse("http://localhost:8888"));
+    dio.options.headers['content-type'] = 'application/x-www-form-urlencoded';
+    Response response = await dio.post(
+      'https://accounts.spotify.com/api/token',
+      data: {
+        'code': code,
+        'grant_type': 'authorization_code',
+        'redirect_uri': 'http://localhost:8888'
+      },
+      options: Options(
+        headers: {'Authorization': basicAuth},
+        contentType: Headers.formUrlEncodedContentType,
+      ),
+    );
 
-    var client =
-        await grant.handleAuthorizationResponse(redirectUrl.queryParameters);
-    var newClient = SpotifyApi.fromClient(client);
-    AuthenticationModel authenticationModel = AuthenticationModel(
-        client.credentials.accessToken,
-        client.credentials.refreshToken,
-        client.credentials.expiration);
-    return authenticationModel;
+    return AuthenticationModel.fromJson(response.data);
+  }
+
+  Future<SearchResult> searchItems(
+      AuthenticationModel authenticationModel, String searchTerms,
+      [int offset = 0]) async {
+    Response response = await dio.get(
+      'https://api.spotify.com/v1/search?q=$searchTerms&type=album%2Cartist&market=ES&limit=10&offset=5',
+      options: Options(
+        headers: {'Authorization': "Bearer ${authenticationModel.accessToken}"},
+        contentType: Headers.formUrlEncodedContentType,
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      SearchResult searchResult = SearchResult.fromJson(response.data);
+      return searchResult;
+    }
+
+    throw HttpException(response.toString());
   }
 }

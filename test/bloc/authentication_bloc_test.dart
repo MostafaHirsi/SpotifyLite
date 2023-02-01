@@ -6,7 +6,7 @@ import 'package:spotify_lite/blocs/authentication/authentication_bloc.dart';
 import 'package:spotify_lite/models/authentication.dart';
 import 'package:spotify_lite/services/spotify_service.dart';
 
-import 'authentication_bloc.mocks.dart';
+import 'authentication_bloc_test.mocks.dart';
 
 @GenerateMocks([SpotifyService])
 void main() {
@@ -20,7 +20,7 @@ void main() {
   );
   when(
     mockSpotifyService.getUserAuthenticatedSpotifyApi(
-      Uri.parse('example_redirect_url'),
+      "SUCCESS_CODE",
     ),
   ).thenAnswer((_) async => successAuthenticationModel);
 
@@ -34,7 +34,8 @@ void main() {
       "RetrieveAccessTokenEvent",
       build: () => AuthenticationBloc(mockSpotifyService),
       act: (bloc) => bloc.add(
-        RetrieveAccessTokenEvent(Uri.parse('example_redirect_url')),
+        RetrieveAccessTokenEvent(
+            Uri.parse('www.example_redirect_url.com?code=SUCCESS_CODE')),
       ),
       expect: () => [RetrieveAccessTokenSuccess(successAuthenticationModel)],
     );
