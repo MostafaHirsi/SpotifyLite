@@ -7,9 +7,10 @@ part 'item.g.dart';
 class Item {
   final String id;
   final String name;
+  final String type;
   final List<Image> images;
 
-  Item(this.id, this.name, this.images);
+  Item(this.id, this.name, this.images, this.type);
 
   factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
 }

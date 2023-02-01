@@ -12,10 +12,12 @@ Item _$ItemFromJson(Map<String, dynamic> json) => Item(
       (json['images'] as List<dynamic>)
           .map((e) => Image.fromJson(e as Map<String, dynamic>))
           .toList(),
+      json['type'] as String,
     );
 
 Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'type': instance.type,
       'images': instance.images,
     };
