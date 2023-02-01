@@ -1,12 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotify_lite/blocs/authentication/authentication_bloc.dart';
 import 'package:spotify_lite/blocs/search/search_bloc.dart';
-import 'package:spotify_lite/models/spotify/item.dart';
-import 'package:spotify_lite/models/spotify/search_result.dart';
 import 'package:spotify_lite/screens/search/widgets/search_list.dart';
 import 'package:spotify_lite/widgets/textfields/search_textfield.dart';
 

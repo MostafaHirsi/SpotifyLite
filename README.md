@@ -1,6 +1,6 @@
 # SpotifyLite
 
-A lightweight spotify album/artist searching app
+A lightweight spotify album/artist searching app.
 
 
 ## Features

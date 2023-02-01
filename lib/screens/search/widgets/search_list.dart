@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:spotify_lite/models/spotify/item.dart';
-import 'package:spotify_lite/models/spotify/search_result.dart';
 import 'package:spotify_lite/models/spotify/image.dart' as model;
 import 'package:spotify_lite/utils/string.dart';
 

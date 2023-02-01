@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:spotify_lite/models/authentication.dart';
 import 'package:spotify_lite/models/spotify/search_result.dart';
 import 'package:spotify_lite/services/spotify_service.dart';
-import 'package:spotify_lite/services/spotify_service.dart';
 
 part 'search_event.dart';
 part 'search_state.dart';
