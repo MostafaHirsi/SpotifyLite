@@ -6,7 +6,6 @@ import 'package:spotify_lite/blocs/search/search_bloc.dart';
 import 'package:spotify_lite/services/spotify_service.dart';
 import 'package:spotify_lite/screens/introduction/introduction_screen.dart';
 import 'package:spotify_lite/screens/search/search_screen.dart';
-import 'package:spotify_lite/services/spotify_service.dart';
 import 'package:injector/injector.dart';
 
 void main() {
