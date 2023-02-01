@@ -26,10 +26,10 @@ void main() {
   );
   Image sampleImage = Image(200, 200, 'image.jpeg');
   List<Item> artistItems = [
-    Item('001', "Hello There", [sampleImage]),
+    Item('001', "Hello There", [sampleImage], "artist"),
   ];
   List<Item> albumItems = [
-    Item('002', "Hello You", [sampleImage]),
+    Item('002', "Hello You", [sampleImage], "album"),
   ];
   Album albums = Album(albumItems);
   Artist artists = Artist(artistItems);
